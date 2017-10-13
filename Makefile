@@ -1,5 +1,5 @@
 EFFECTS_DIR = \
-Gain
+JTM45
 
 INSTALL_PATH = /usr/local/lib/lv2
 

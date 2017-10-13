@@ -1,5 +1,5 @@
 
-NAME = mod-gain
+NAME = JTM45
 
 # installation path
 INSTALL_PATH = /usr/local/lib/lv2

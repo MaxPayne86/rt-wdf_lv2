@@ -5,30 +5,30 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
-<http://moddevices.com/plugins/mod-devel/Gain>
-a lv2:Plugin, lv2:UtilityPlugin;
+<http://aidadsp.cc/plugins/wt-rdf_lv2/JTM45>
+a lv2:Plugin, lv2:SimulatorPlugin;
 
-doap:name "Gain";
+doap:name "JTM45";
 
 doap:developer [
-    foaf:name "Andre";
+    foaf:name "Max";
     foaf:homepage <>;
-    foaf:mbox <mailto:andre_coutinho@rocketmail.com>;
+    foaf:mbox <mailto:maxipenna@libero.it>;
 ];
 
 doap:maintainer [
-    foaf:name "MOD Team";
-    foaf:homepage <http://moddevices.com>;
-    foaf:mbox <mailto:devel@moddevices.com>;
+    foaf:name "Aida DSP Team";
+    foaf:homepage <http://aidadsp.cc>;
+    foaf:mbox <mailto:info@aidadsp.cc>;
 ];
 
-mod:brand "MOD";
-mod:label "Gain";
+mod:brand "Aida DSP";
+mod:label "JTM45";
 
 doap:license "GPL";
 
 rdfs:comment """
-Simple volume gain plugin without "zipping" noise while messing with the gain parameter.
+Marshall JTM45 valve amplifier model
 """;
 
 lv2:port
@@ -52,8 +52,17 @@ lv2:port
     lv2:symbol "Gain";
     lv2:name "Gain";
     lv2:shortname "Gain";
-    lv2:default 3.0;
-    lv2:minimum -40.0;
-    lv2:maximum 40.0;
-    units:unit units:db ;
+    lv2:default 0.1;
+    lv2:minimum 0.0;
+    lv2:maximum 1.0;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:symbol "Volume";
+    lv2:name "Volume";
+    lv2:shortname "Volume";
+    lv2:default 0.1;
+    lv2:minimum 0.0;
+    lv2:maximum 1.0;
 ].

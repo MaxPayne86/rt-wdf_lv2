@@ -7,9 +7,9 @@
 
 /**********************************************************************************************************************************************************/
 
-#define PLUGIN_URI "http://moddevices.com/plugins/mod-devel/Gain"
+#define PLUGIN_URI "http://aidadsp.cc/plugins/wt-rdf_lv2/JTM45"
 #define TAMANHO_DO_BUFFER 1024
-enum {IN, OUT_1, GAIN, PLUGIN_PORT_COUNT};
+enum {IN, OUT_1, GAIN, VOLUME, PLUGIN_PORT_COUNT};
 
 /**********************************************************************************************************************************************************/
 
@@ -28,8 +28,14 @@ public:
     float *in;
     float *out_1;
     float *gain;
+    float *volume;
 
     float g;
+    float v;
+    
+    wdfJTM45Tree *JTM45plugin;
+private:
+    //wdfJTM45Tree JTM45;
 };
 
 /**********************************************************************************************************************************************************/
@@ -59,8 +65,17 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 LV2_Handle GainControl::instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features)
 {
     GainControl *plugin = new GainControl();
-
-    plugin->g = 1;
+    plugin->JTM45plugin = new wdfJTM45Tree();
+    
+    plugin->g = 0.1;
+    plugin->v = 0.1;
+    
+    plugin->JTM45plugin->initTree();
+    //JTM45plugin->setSamplerate(48000);
+    plugin->JTM45plugin->adaptTree();
+    
+    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
+    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
 
     return (LV2_Handle)plugin;
 }
@@ -97,6 +112,9 @@ void GainControl::connect_port(LV2_Handle instance, uint32_t port, void *data)
         case GAIN:
             plugin->gain = (float*) data;
             break;
+        case VOLUME:
+            plugin->volume = (float*) data;
+            break;
     }
 }
 
@@ -106,14 +124,22 @@ void GainControl::run(LV2_Handle instance, uint32_t n_samples)
 {
     GainControl *plugin;
     plugin = (GainControl *) instance;
-    float g_before = plugin->g;
-    plugin->g = powf(10.0f, (*plugin->gain)/20.0f);
+    
+    plugin->g = *plugin->gain;
+    plugin->v = *plugin->volume;
 
+    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
+    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
+    
+    // Oversample?
     for (uint32_t i=0; i<n_samples; i++)
 	{
-		plugin->out_1[i] = (g_before + ((plugin->g - g_before)/n_samples) * i) * plugin->in[i];
+        float inVoltage = plugin->in[i];
+        plugin->JTM45plugin->setInputValue(inVoltage);
+        plugin->JTM45plugin->cycleWave();
+		plugin->out_1[i] = (float)(plugin->JTM45plugin->getOutputValue());
 	}
-
+    // Downsample?
 }
 
 /**********************************************************************************************************************************************************/
