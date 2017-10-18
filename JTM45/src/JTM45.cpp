@@ -65,17 +65,17 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 LV2_Handle GainControl::instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features)
 {
     GainControl *plugin = new GainControl();
-    plugin->JTM45plugin = new wdfJTM45Tree();
+    //plugin->JTM45plugin = new wdfJTM45Tree();
     
     plugin->g = 0.1;
     plugin->v = 0.1;
     
-    plugin->JTM45plugin->initTree();
+    //plugin->JTM45plugin->initTree();
     //JTM45plugin->setSamplerate(48000);
-    plugin->JTM45plugin->adaptTree();
+    //plugin->JTM45plugin->adaptTree();
     
-    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
-    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
+    //plugin->JTM45plugin->setParam(0, plugin->v); // Volume
+    //plugin->JTM45plugin->setParam(1, plugin->g); // Gain
 
     return (LV2_Handle)plugin;
 }
@@ -128,16 +128,17 @@ void GainControl::run(LV2_Handle instance, uint32_t n_samples)
     plugin->g = *plugin->gain;
     plugin->v = *plugin->volume;
 
-    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
-    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
+    //plugin->JTM45plugin->setParam(0, plugin->v); // Volume
+    //plugin->JTM45plugin->setParam(1, plugin->g); // Gain
     
     // Oversample?
     for (uint32_t i=0; i<n_samples; i++)
 	{
         float inVoltage = plugin->in[i];
-        plugin->JTM45plugin->setInputValue(inVoltage);
-        plugin->JTM45plugin->cycleWave();
-		plugin->out_1[i] = (float)(plugin->JTM45plugin->getOutputValue());
+        //plugin->JTM45plugin->setInputValue(inVoltage);
+        //plugin->JTM45plugin->cycleWave();
+		//plugin->out_1[i] = (float)(plugin->JTM45plugin->getOutputValue());
+        plugin->out_1[i] = inVoltage;
 	}
     // Downsample?
 }
