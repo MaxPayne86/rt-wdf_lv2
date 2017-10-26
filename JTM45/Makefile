@@ -10,7 +10,7 @@ CXX ?= g++
 
 # flags
 CXXFLAGS += -std=c++11 $(shell pkg-config --cflags rt-wdf) -I. -c -ffast-math -fPIC -DPIC -Wall 
-LDFLAGS += $(shell pkg-config --libs rt-wdf) -shared -lm
+LDFLAGS += $(shell pkg-config --libs rt-wdf) -shared -lm -lrt-wdf
 
 # libs
 LIBS =
