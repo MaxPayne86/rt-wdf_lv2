@@ -13,7 +13,7 @@ CXXFLAGS += -std=gnu++0x -O3 -ffast-math -fPIC -DPIC -Wall $(shell pkg-config --
 LDFLAGS += -shared -Wl,-O1 -Wl,--as-needed -Wl,--no-undefined -Wl,--strip-all $(shell pkg-config --libs rt-wdf) -lrt-wdf -lm
 
 # libs
-LIBS =
+LIBS = -lrt-wdf -lm
 
 # remove command
 RM = rm -f
