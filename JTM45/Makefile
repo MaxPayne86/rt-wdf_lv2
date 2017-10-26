@@ -9,8 +9,8 @@ COMPLETE_INSTALL_PATH = $(DESTDIR)$(INSTALL_PATH)/$(NAME).lv2
 CXX ?= g++
 
 # flags
-CXXFLAGS += -std=c++11 -03 -ffast-math -fPIC -DPIC -Wall $(shell pkg-config --cflags rt-wdf) -I. 
-LDFLAGS += -shared -Wl,-O1 -Wl,--as-needed -Wl,--no-undefined -Wl,--strip-all $(shell pkg-config --libs rt-wdf) -lm 
+CXXFLAGS += -std=gnu++0x -O3 -ffast-math -fPIC -DPIC -Wall $(shell pkg-config --cflags rt-wdf) -I. -c
+LDFLAGS += -shared -Wl,-O1 -Wl,--as-needed -Wl,--no-undefined -Wl,--strip-all $(shell pkg-config --libs rt-wdf) -lrt-wdf -lm
 
 # libs
 LIBS =
