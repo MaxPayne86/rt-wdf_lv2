@@ -111,7 +111,7 @@ public:
 
         paramData inputGain;
         inputGain.name = "Input Gain";
-        inputGain.ID = 0;
+        inputGain.ID = 1;
         inputGain.type = doubleParam;
         inputGain.value = 0.1;
         inputGain.units = " ";
@@ -892,9 +892,9 @@ public:
 	}
 
 	void setParam(size_t paramID, double paramValue) {
-		if (paramID == 0) {
+		if (paramID == 0) { // Volume
             params[0].value = paramValue;
-        } else if (paramID == 1) {
+        } else if (paramID == 1) { // Gain
         	params[1].value = paramValue;
         	RVBP->R = RVol * (1 - params[1].value);
         	RVBN->R = RVol * params[1].value;
