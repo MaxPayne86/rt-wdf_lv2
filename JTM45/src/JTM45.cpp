@@ -13,11 +13,11 @@ enum {IN, OUT_1, GAIN, VOLUME, PLUGIN_PORT_COUNT};
 
 /**********************************************************************************************************************************************************/
 
-class GainControl
+class JTM45
 {
 public:
-    GainControl() {}
-    ~GainControl() {}
+    JTM45() {}
+    ~JTM45() {}
     static LV2_Handle instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features);
     static void activate(LV2_Handle instance);
     static void deactivate(LV2_Handle instance);
@@ -42,13 +42,13 @@ private:
 
 static const LV2_Descriptor Descriptor = {
     PLUGIN_URI,
-    GainControl::instantiate,
-    GainControl::connect_port,
-    GainControl::activate,
-    GainControl::run,
-    GainControl::deactivate,
-    GainControl::cleanup,
-    GainControl::extension_data
+    JTM45::instantiate,
+    JTM45::connect_port,
+    JTM45::activate,
+    JTM45::run,
+    JTM45::deactivate,
+    JTM45::cleanup,
+    JTM45::extension_data
 };
 
 /**********************************************************************************************************************************************************/
@@ -62,9 +62,9 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 
 /**********************************************************************************************************************************************************/
 
-LV2_Handle GainControl::instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features)
+LV2_Handle JTM45::instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features)
 {
-    GainControl *plugin = new GainControl();
+    JTM45 *plugin = new JTM45();
     plugin->JTM45plugin = new wdfJTM45Tree();
     
     plugin->g = 0.1;
@@ -82,24 +82,24 @@ LV2_Handle GainControl::instantiate(const LV2_Descriptor* descriptor, double sam
 
 /**********************************************************************************************************************************************************/
 
-void GainControl::activate(LV2_Handle instance)
+void JTM45::activate(LV2_Handle instance)
 {
     // TODO: include the activate function code here
 }
 
 /**********************************************************************************************************************************************************/
 
-void GainControl::deactivate(LV2_Handle instance)
+void JTM45::deactivate(LV2_Handle instance)
 {
     // TODO: include the deactivate function code here
 }
 
 /**********************************************************************************************************************************************************/
 
-void GainControl::connect_port(LV2_Handle instance, uint32_t port, void *data)
+void JTM45::connect_port(LV2_Handle instance, uint32_t port, void *data)
 {
-    GainControl *plugin;
-    plugin = (GainControl *) instance;
+    JTM45 *plugin;
+    plugin = (JTM45 *) instance;
 
     switch (port)
     {
@@ -120,10 +120,10 @@ void GainControl::connect_port(LV2_Handle instance, uint32_t port, void *data)
 
 /**********************************************************************************************************************************************************/
 
-void GainControl::run(LV2_Handle instance, uint32_t n_samples)
+void JTM45::run(LV2_Handle instance, uint32_t n_samples)
 {
-    GainControl *plugin;
-    plugin = (GainControl *) instance;
+    JTM45 *plugin;
+    plugin = (JTM45 *) instance;
     
     plugin->g = *plugin->gain;
     plugin->v = *plugin->volume;
@@ -144,14 +144,14 @@ void GainControl::run(LV2_Handle instance, uint32_t n_samples)
 
 /**********************************************************************************************************************************************************/
 
-void GainControl::cleanup(LV2_Handle instance)
+void JTM45::cleanup(LV2_Handle instance)
 {
-    delete ((GainControl *) instance);
+    delete ((JTM45 *) instance);
 }
 
 /**********************************************************************************************************************************************************/
 
-const void* GainControl::extension_data(const char* uri)
+const void* JTM45::extension_data(const char* uri)
 {
     return NULL;
 }
