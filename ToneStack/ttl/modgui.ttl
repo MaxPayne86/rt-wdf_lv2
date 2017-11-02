@@ -1,0 +1,30 @@
+@prefix modgui: <http://moddevices.com/ns/modgui#> .
+@prefix lv2:    <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:     <http://lv2plug.in/ns/extensions/ui#> .
+
+<http://aidadsp.cc/plugins/wt-rdf_lv2/ToneStack>
+    modgui:gui [
+        modgui:resourcesDirectory <modgui> ;
+        modgui:iconTemplate <modgui/icon-gain.html> ;
+        modgui:stylesheet <modgui/stylesheet-gain.css> ;
+        modgui:screenshot <modgui/screenshot-gain.png> ;
+        modgui:thumbnail <modgui/thumbnail-gain.png> ;
+        modgui:brand "Aida DSP" ;
+        modgui:label "Fender Tone Stack" ;
+        modgui:model "boxy" ;
+        modgui:panel "3-knob" ;
+        modgui:color "white" ;
+        modgui:port [
+            lv2:index 0 ;
+            lv2:symbol "Bass" ;
+            lv2:name "Bass" ;
+        ],[
+            lv2:index 1 ;
+            lv2:symbol "Mid" ;
+            lv2:name "Mid" ;
+        ],[
+            lv2:index 2 ;
+            lv2:symbol "High" ;
+            lv2:name "High" ;
+        ];
+    ].

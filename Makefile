@@ -1,5 +1,6 @@
 EFFECTS_DIR = \
-JTM45
+JTM45 \
+ToneStack
 
 INSTALL_PATH = /usr/local/lib/lv2
 

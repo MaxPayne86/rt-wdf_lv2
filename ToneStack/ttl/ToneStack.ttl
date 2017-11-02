@@ -1,0 +1,78 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#>.
+@prefix foaf:  <http://xmlns.com/foaf/0.1/>.
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#>.
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+
+<http://aidadsp.cc/plugins/wt-rdf_lv2/ToneStack>
+a lv2:Plugin, lv2:SimulatorPlugin;
+
+doap:name "JTM45";
+
+doap:developer [
+    foaf:name "Max";
+    foaf:homepage <>;
+    foaf:mbox <mailto:maxipenna@libero.it>;
+];
+
+doap:maintainer [
+    foaf:name "Aida DSP Team";
+    foaf:homepage <http://aidadsp.cc>;
+    foaf:mbox <mailto:info@aidadsp.cc>;
+];
+
+mod:brand "Aida DSP";
+mod:label "ToneStack";
+
+doap:license "GPL";
+
+rdfs:comment """
+Fender Tone Stack
+""";
+
+lv2:port
+[
+    a lv2:AudioPort, lv2:InputPort;
+    lv2:index 0;
+    lv2:symbol "In";
+    lv2:name "In";
+    lv2:shortname "In";
+],
+[
+    a lv2:AudioPort, lv2:OutputPort;
+    lv2:index 1;
+    lv2:symbol "Out";
+    lv2:name "Out";
+    lv2:shortname "Out";
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 2;
+    lv2:symbol "Bass";
+    lv2:name "Bass";
+    lv2:shortname "Bass";
+    lv2:default 0.5;
+    lv2:minimum 0.0;
+    lv2:maximum 1.0;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 3;
+    lv2:symbol "Mid";
+    lv2:name "Mid";
+    lv2:shortname "Mid";
+    lv2:default 0.5;
+    lv2:minimum 0.0;
+    lv2:maximum 1.0;
+],
+[
+    a lv2:ControlPort, lv2:InputPort;
+    lv2:index 4;
+    lv2:symbol "High";
+    lv2:name "High";
+    lv2:shortname "High";
+    lv2:default 0.5;
+    lv2:minimum 0.0;
+    lv2:maximum 1.0;
+].
