@@ -32,10 +32,9 @@ public:
 
     float g;
     float v;
-    
-    wdfJTM45Tree *JTM45plugin;
+
 private:
-    //wdfJTM45Tree JTM45;
+    wdfJTM45Tree *JTM45Tree;
 };
 
 /**********************************************************************************************************************************************************/
@@ -65,17 +64,17 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 LV2_Handle JTM45::instantiate(const LV2_Descriptor* descriptor, double samplerate, const char* bundle_path, const LV2_Feature* const* features)
 {
     JTM45 *plugin = new JTM45();
-    plugin->JTM45plugin = new wdfJTM45Tree();
+    plugin->JTM45Tree = new wdfJTM45Tree();
     
     plugin->g = 0.1;
     plugin->v = 0.1;
     
-    plugin->JTM45plugin->initTree();
-    //JTM45plugin->setSamplerate(48000);
-    plugin->JTM45plugin->adaptTree();
+    plugin->JTM45Tree->initTree();
+    //plugin->JTM45Tree->setSamplerate(48000);
+    plugin->JTM45Tree->adaptTree();
     
-    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
-    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
+    plugin->JTM45Tree->setParam(0, plugin->v); // Volume
+    plugin->JTM45Tree->setParam(1, plugin->g); // Gain
 
     return (LV2_Handle)plugin;
 }
@@ -128,16 +127,16 @@ void JTM45::run(LV2_Handle instance, uint32_t n_samples)
     plugin->g = *plugin->gain;
     plugin->v = *plugin->volume;
 
-    plugin->JTM45plugin->setParam(0, plugin->v); // Volume
-    plugin->JTM45plugin->setParam(1, plugin->g); // Gain
+    plugin->JTM45Tree->setParam(0, plugin->v); // Volume
+    plugin->JTM45Tree->setParam(1, plugin->g); // Gain
     
     // Oversample?
     for (uint32_t i=0; i<n_samples; i++)
 	{
         float inVoltage = plugin->in[i];
-        plugin->JTM45plugin->setInputValue(inVoltage);
-        plugin->JTM45plugin->cycleWave();
-		plugin->out_1[i] = (float)(plugin->JTM45plugin->getOutputValue());
+        plugin->JTM45Tree->setInputValue(inVoltage);
+        plugin->JTM45Tree->cycleWave();
+		plugin->out_1[i] = (float)(plugin->JTM45Tree->getOutputValue());
 	}
     // Downsample?
 }
